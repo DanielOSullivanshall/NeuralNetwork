@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeuralNetwork_Consol
 {
     class Program
     {
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             int Iteration = 0; // Current Training Iteration
 
             NeuralNetwork BestNetwork = new NeuralNetwork
@@ -17,16 +12,20 @@ namespace NeuralNetwork_Consol
             double BestCost = double.MaxValue; // The cost that the best network achieved
             double[] BestNetworkResults = new double[4]; // The results that the best network calculated
 
-            double[][] Inputs = new double[][] // This represents the possible inputs 
-                                               // or the training dataset
-            {
+            // This represents the possible inputs 
+            // or the training dataset
+
+            double[][] Inputs = new double[][] {
                     new double[] { 0, 0 },
                     new double[] { 0, 1 },
                     new double[] { 1, 0 },
                     new double[] { 1, 1 }
             };
-            double[] ExpectedOutputs = new double[] { 0, 1, 1, 0 }; // This represents 
-                                                                    // the expected outputs from the optimum NeuralNetwork
+
+            // This represents 
+            // the expected outputs from the optimum NeuralNetwork
+
+            double[] ExpectedOutputs = new double[] { 0, 1, 1, 0 };
 
             while(true) // Keep Training forever
             {
@@ -38,8 +37,7 @@ namespace NeuralNetwork_Consol
                                                                 // network calculated
 
                 // Calculate the cost of the mutated network
-                for(int i = 0; i < Inputs.Length; i++)
-                {
+                for(int i = 0; i < Inputs.Length; i++) {
                     double[] Result = MutatedNetwork.FeedForward(Inputs[i]);
                     MutatedNetworkCost += Math.Abs(Result[0] - ExpectedOutputs[i]);
 
@@ -47,16 +45,14 @@ namespace NeuralNetwork_Consol
                 }
 
                 // Does the mutated network perform better than the last one
-                if(MutatedNetworkCost < BestCost)
-                {
+                if(MutatedNetworkCost < BestCost) {
                     BestNetwork = MutatedNetwork;
                     BestCost = MutatedNetworkCost;
                     BestNetworkResults = CurrentNetworkResults;
                 }
 
                 // Print only each 20000 iteration in order to speed up the training process
-                if(Iteration % 20000 == 0)
-                {
+                if(Iteration % 20000 == 0) {
                     Console.Clear(); // Clear the current console text
 
                     for(int i = 0; i < BestNetworkResults.Length; i++) // Print the best truth table
@@ -67,7 +63,6 @@ namespace NeuralNetwork_Consol
                     Console.WriteLine("Cost: " + BestCost); // Print the best cost
                     Console.WriteLine("Iteration: " + Iteration); // Print the current Iteration
                 }
-
                 // An iteration is done
                 Iteration++;
             }
